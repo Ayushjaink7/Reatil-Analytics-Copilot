@@ -1,0 +1,62 @@
+[
+  {
+    "id": "q01",
+    "question": "How many orders have been delivered?",
+    "gold_sql": "SELECT COUNT(*) AS delivered_orders FROM orders WHERE order_status = 'delivered'"
+  },
+  {
+    "id": "q02",
+    "question": "What was the total GMV in 2017?",
+    "gold_sql": "SELECT ROUND(SUM(oi.price + oi.freight_value), 2) AS gmv_2017 FROM order_items oi JOIN orders o ON o.order_id = oi.order_id WHERE o.order_status NOT IN ('canceled', 'unavailable') AND strftime('%Y', o.order_purchase_timestamp) = '2017'"
+  },
+  {
+    "id": "q03",
+    "question": "What are the top 5 product categories by revenue? Use English category names.",
+    "gold_sql": "SELECT COALESCE(t.product_category_name_english, p.product_category_name) AS category, ROUND(SUM(oi.price), 2) AS revenue FROM order_items oi JOIN orders o ON o.order_id = oi.order_id LEFT JOIN products p ON p.product_id = oi.product_id LEFT JOIN category_translation t ON t.product_category_name = p.product_category_name WHERE o.order_status NOT IN ('canceled', 'unavailable') GROUP BY category ORDER BY revenue DESC LIMIT 5"
+  },
+  {
+    "id": "q04",
+    "question": "Which 5 customer states have the highest late-delivery rate, among states with at least 500 delivered orders?",
+    "gold_sql": "SELECT customer_state, ROUND(100.0 * AVG(is_late), 2) AS late_rate_pct FROM v_order_delivery GROUP BY customer_state HAVING COUNT(*) >= 500 ORDER BY late_rate_pct DESC LIMIT 5"
+  },
+  {
+    "id": "q05",
+    "question": "What is the average review score for late deliveries compared with on-time deliveries?",
+    "gold_sql": "SELECT d.is_late, ROUND(AVG(r.review_score), 2) AS avg_review_score FROM v_order_delivery d JOIN reviews r ON r.order_id = d.order_id GROUP BY d.is_late ORDER BY d.is_late"
+  },
+  {
+    "id": "q06",
+    "question": "How many orders were placed in each month of 2018?",
+    "gold_sql": "SELECT strftime('%Y-%m', order_purchase_timestamp) AS month, COUNT(*) AS orders FROM orders WHERE strftime('%Y', order_purchase_timestamp) = '2018' GROUP BY month ORDER BY month"
+  },
+  {
+    "id": "q07",
+    "question": "What percentage of customers placed more than one order?",
+    "gold_sql": "WITH per_customer AS (SELECT c.customer_unique_id, COUNT(DISTINCT o.order_id) AS n_orders FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_unique_id) SELECT ROUND(100.0 * AVG(CASE WHEN n_orders > 1 THEN 1 ELSE 0 END), 2) AS repeat_customer_pct FROM per_customer"
+  },
+  {
+    "id": "q08",
+    "question": "Which payment type is used most often, and what share of payment records does it account for?",
+    "gold_sql": "SELECT payment_type, ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM payments), 2) AS share_pct FROM payments GROUP BY payment_type ORDER BY share_pct DESC LIMIT 1"
+  },
+  {
+    "id": "q09",
+    "question": "What is the average delivery time in days for customers in SP, RJ and MG?",
+    "gold_sql": "SELECT customer_state, ROUND(AVG(delivery_days), 2) AS avg_delivery_days FROM v_order_delivery WHERE customer_state IN ('SP', 'RJ', 'MG') GROUP BY customer_state ORDER BY customer_state"
+  },
+  {
+    "id": "q10",
+    "question": "Who are the top 10 sellers by revenue, and which city is each one in?",
+    "gold_sql": "SELECT s.seller_id, s.seller_city, ROUND(SUM(oi.price), 2) AS revenue FROM order_items oi JOIN orders o ON o.order_id = oi.order_id JOIN sellers s ON s.seller_id = oi.seller_id WHERE o.order_status NOT IN ('canceled', 'unavailable') GROUP BY s.seller_id, s.seller_city ORDER BY revenue DESC LIMIT 10"
+  },
+  {
+    "id": "q11",
+    "question": "How many orders were canceled in each month of 2018?",
+    "gold_sql": "SELECT strftime('%Y-%m', order_purchase_timestamp) AS month, COUNT(*) AS canceled_orders FROM orders WHERE order_status = 'canceled' AND strftime('%Y', order_purchase_timestamp) = '2018' GROUP BY month ORDER BY month"
+  },
+  {
+    "id": "q12",
+    "question": "What is the average order value (GMV per order) for each payment type? Use the main payment type of each order.",
+    "gold_sql": "WITH order_gmv AS (SELECT oi.order_id, SUM(oi.price + oi.freight_value) AS gmv FROM order_items oi JOIN orders o ON o.order_id = oi.order_id WHERE o.order_status NOT IN ('canceled', 'unavailable') GROUP BY oi.order_id), main_payment AS (SELECT order_id, payment_type FROM payments WHERE payment_sequential = 1) SELECT mp.payment_type, ROUND(AVG(g.gmv), 2) AS avg_order_value FROM order_gmv g JOIN main_payment mp ON mp.order_id = g.order_id GROUP BY mp.payment_type ORDER BY avg_order_value DESC"
+  }
+]

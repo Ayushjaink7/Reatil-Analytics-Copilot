@@ -1,0 +1,20 @@
+# Retail Analytics Copilot
+# Tested with Python 3.13, pandas 3.0.5, numpy 2.5.3, scikit-learn 1.9.1, scipy 1.18.1, matplotlib 3.11.2.
+# Lower bounds are the oldest versions the code relies on.
+
+# analysis + modelling (notebook)
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.4
+scipy>=1.10
+matplotlib>=3.7
+
+# text-to-SQL agent
+groq>=0.9
+python-dotenv>=1.0    # optional: lets the agent read GROQ_API_KEY from a .env file
+
+# running the notebook
+jupyter
+
+# optional: SHAP beeswarm for the gradient-boosting model (notebook section 3.5)
+# shap>=0.45

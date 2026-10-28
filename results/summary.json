@@ -1,0 +1,413 @@
+{
+  "revenue": {
+    "jan_aug_2017_gmv": 3574993.0,
+    "jan_aug_2018_gmv": 8593138.0,
+    "yoy_gmv_growth": 1.4036796715406155,
+    "yoy_order_growth": 1.3725733534261146,
+    "peak_month": "2017-11",
+    "peak_gmv": 1172192.0,
+    "aov": 160.19313620346253
+  },
+  "delivery": {
+    "avg_delivery_days": 12.6,
+    "avg_promised_days": 23.7,
+    "late_pct": 6.77,
+    "delivered_orders": 96470,
+    "fastest_state": "SP",
+    "fastest_days": 8.8,
+    "slowest_state": "RR",
+    "slowest_days": 29.4,
+    "worst_late_states_1000plus": [
+      {
+        "state": "CE",
+        "late_pct": 13.8
+      },
+      {
+        "state": "BA",
+        "late_pct": 12.2
+      },
+      {
+        "state": "RJ",
+        "late_pct": 12.1
+      }
+    ]
+  },
+  "customers": {
+    "unique_customers": 94990,
+    "repeat_pct": 3.0400000000000063
+  },
+  "rfm": {
+    "Lapsed big spenders": {
+      "customers": 32131,
+      "customers_pct": 33.83,
+      "revenue_pct": 61.02,
+      "recency_median_days": 264.0,
+      "spend_median": 200.98,
+      "repeat_pct": 0.0
+    },
+    "Lapsed low spenders": {
+      "customers": 42078,
+      "customers_pct": 44.3,
+      "revenue_pct": 18.23,
+      "recency_median_days": 279.0,
+      "spend_median": 65.78,
+      "repeat_pct": 0.0
+    },
+    "Recent one-time buyers": {
+      "customers": 17887,
+      "customers_pct": 18.83,
+      "revenue_pct": 15.09,
+      "recency_median_days": 46.0,
+      "spend_median": 104.3,
+      "repeat_pct": 0.0
+    },
+    "Repeat customers": {
+      "customers": 2887,
+      "customers_pct": 3.04,
+      "revenue_pct": 5.66,
+      "recency_median_days": 206.0,
+      "spend_median": 225.55,
+      "repeat_pct": 100.0
+    }
+  },
+  "cv": {
+    "selected": "Logistic Regression",
+    "best_per_family": {
+      "Gradient Boosting": {
+        "params": "{\"learning_rate\": 0.03, \"max_leaf_nodes\": 15, \"min_samples_leaf\": 200}",
+        "PR-AUC mean": 0.1826,
+        "ROC-AUC mean": 0.6625,
+        "ROC-AUC std": 0.0592
+      },
+      "Logistic Regression": {
+        "params": "{\"C\": 0.05}",
+        "PR-AUC mean": 0.1998,
+        "ROC-AUC mean": 0.6846,
+        "ROC-AUC std": 0.0686
+      },
+      "Random Forest": {
+        "params": "{\"min_samples_leaf\": 150}",
+        "PR-AUC mean": 0.1934,
+        "ROC-AUC mean": 0.6804,
+        "ROC-AUC std": 0.0525
+      }
+    }
+  },
+  "model": {
+    "train_orders": 68051,
+    "test_orders": 25352,
+    "test_late_rate": 0.043980751025560115,
+    "selected_model": "Logistic Regression",
+    "test": {
+      "Logistic Regression": {
+        "ROC-AUC": 0.7235,
+        "PR-AUC": 0.0983,
+        "precision@10%": 0.1104,
+        "recall@10%": 0.2511,
+        "F1@10%": 0.1534,
+        "lift@10%": 2.5104
+      },
+      "Random Forest": {
+        "ROC-AUC": 0.6216,
+        "PR-AUC": 0.0835,
+        "precision@10%": 0.0994,
+        "recall@10%": 0.226,
+        "F1@10%": 0.138,
+        "lift@10%": 2.2594
+      },
+      "Gradient Boosting": {
+        "ROC-AUC": 0.7057,
+        "PR-AUC": 0.0977,
+        "precision@10%": 0.1116,
+        "recall@10%": 0.2538,
+        "F1@10%": 0.155,
+        "lift@10%": 2.5373
+      }
+    },
+    "capture_at": {
+      "10%": 0.25112107623318386,
+      "20%": 0.44035874439461886,
+      "30%": 0.5991031390134529
+    },
+    "top_decile_late_rate": 0.11041009463722397,
+    "bottom_half_late_rate": 0.016803408015146733,
+    "random_vs_time_split": {
+      "Logistic Regression": {
+        "ROC-AUC random split": 0.7514,
+        "ROC-AUC time split (test)": 0.7235,
+        "overstated by": 0.0278
+      },
+      "Random Forest": {
+        "ROC-AUC random split": 0.7741,
+        "ROC-AUC time split (test)": 0.6216,
+        "overstated by": 0.1525
+      },
+      "Gradient Boosting": {
+        "ROC-AUC random split": 0.7947,
+        "ROC-AUC time split (test)": 0.7057,
+        "overstated by": 0.0891
+      }
+    }
+  },
+  "explain": {
+    "perm_importance_Logistic Regression": [
+      {
+        "feature": "slack_days",
+        "PR-AUC drop": 0.0631,
+        "std": 0.0005
+      },
+      {
+        "feature": "customer_state",
+        "PR-AUC drop": 0.0189,
+        "std": 0.0009
+      },
+      {
+        "feature": "promised_days",
+        "PR-AUC drop": 0.0061,
+        "std": 0.0037
+      },
+      {
+        "feature": "seller_state",
+        "PR-AUC drop": 0.0057,
+        "std": 0.0007
+      },
+      {
+        "feature": "state_recent_late",
+        "PR-AUC drop": 0.0049,
+        "std": 0.0011
+      },
+      {
+        "feature": "log_seller_load_7d",
+        "PR-AUC drop": 0.0035,
+        "std": 0.0006
+      },
+      {
+        "feature": "seller_handling_days",
+        "PR-AUC drop": 0.0027,
+        "std": 0.0016
+      },
+      {
+        "feature": "n_items",
+        "PR-AUC drop": 0.0019,
+        "std": 0.0005
+      }
+    ],
+    "perm_importance_Gradient Boosting": [
+      {
+        "feature": "slack_days",
+        "PR-AUC drop": 0.0486,
+        "std": 0.0009
+      },
+      {
+        "feature": "platform_recent_late",
+        "PR-AUC drop": 0.006,
+        "std": 0.0013
+      },
+      {
+        "feature": "promised_days",
+        "PR-AUC drop": 0.0059,
+        "std": 0.001
+      },
+      {
+        "feature": "seller_handling_days",
+        "PR-AUC drop": 0.0045,
+        "std": 0.0019
+      },
+      {
+        "feature": "customer_state",
+        "PR-AUC drop": 0.004,
+        "std": 0.001
+      },
+      {
+        "feature": "seller_state",
+        "PR-AUC drop": 0.0019,
+        "std": 0.0014
+      },
+      {
+        "feature": "distance_km",
+        "PR-AUC drop": 0.0018,
+        "std": 0.0023
+      },
+      {
+        "feature": "same_state",
+        "PR-AUC drop": 0.0018,
+        "std": 0.0005
+      }
+    ],
+    "lr_top_coefficients": [
+      {
+        "feature": "slack_days",
+        "coef": -1.572,
+        "odds_ratio": 0.208,
+        "one_sd": 7.097
+      },
+      {
+        "feature": "promised_days",
+        "coef": 0.983,
+        "odds_ratio": 2.672,
+        "one_sd": 7.76
+      },
+      {
+        "feature": "state_recent_late",
+        "coef": -0.376,
+        "odds_ratio": 0.687,
+        "one_sd": 0.064
+      },
+      {
+        "feature": "same_state",
+        "coef": -0.353,
+        "odds_ratio": 0.702,
+        "one_sd": 0.477
+      },
+      {
+        "feature": "platform_recent_late",
+        "coef": -0.297,
+        "odds_ratio": 0.743,
+        "one_sd": 0.052
+      },
+      {
+        "feature": "seller_handling_days",
+        "coef": 0.271,
+        "odds_ratio": 1.311,
+        "one_sd": 1.396
+      }
+    ],
+    "shap_global_top": {
+      "slack_days": 1.5442,
+      "promised_days": 1.1069,
+      "customer_state": 0.4967,
+      "same_state": 0.3491,
+      "state_recent_late": 0.2745,
+      "seller_handling_days": 0.2085,
+      "log_freight": 0.2021,
+      "seller_late_rate": 0.1954
+    }
+  },
+  "stats": {
+    "n_late": 6381,
+    "n_ontime": 89443,
+    "mean_late": 2.270490518727472,
+    "mean_ontime": 4.290386055923885,
+    "median_late": 1.0,
+    "median_ontime": 5.0,
+    "mw_u": 103305546.0,
+    "mw_p": 0.0,
+    "cles": 0.18100415126766284,
+    "rank_biserial": -0.6379916974646743,
+    "welch_t": -100.79084361802471,
+    "welch_p": 0.0,
+    "mean_diff": -2.0198955371964127,
+    "mean_diff_ci": [
+      -2.0591810456870627,
+      -1.9806100287057626
+    ],
+    "cohens_d": -1.7088621107482853,
+    "chi2": 15064.148966139202,
+    "chi2_p": 0.0,
+    "low_rate_late": 0.6241968343519825,
+    "low_rate_ontime": 0.09267354628087161,
+    "relative_risk": 6.735437019537263,
+    "rr_ci": [
+      6.5495812055842455,
+      6.926566817046769
+    ],
+    "odds_ratio": 16.261811351821212,
+    "or_mantel_haenszel": 15.779889091767588
+  },
+  "ab_test": {
+    "return_after_ontime_first": 0.013026687417142198,
+    "return_after_late_first": 0.010198698786706524,
+    "return_late_vs_ontime_p": 0.07811485341917833,
+    "baseline_repeat_90d": 0.012801755669348939,
+    "new_customers_per_week": 1488.3786008230452,
+    "table": [
+      {
+        "relative lift (MDE)": "10%",
+        "control rate %": 1.28,
+        "treatment rate %": 1.41,
+        "customers per group": 127022,
+        "total customers": 254044,
+        "weeks to enrol": 170.69
+      },
+      {
+        "relative lift (MDE)": "20%",
+        "control rate %": 1.28,
+        "treatment rate %": 1.54,
+        "customers per group": 33245,
+        "total customers": 66490,
+        "weeks to enrol": 44.67
+      },
+      {
+        "relative lift (MDE)": "30%",
+        "control rate %": 1.28,
+        "treatment rate %": 1.66,
+        "customers per group": 15437,
+        "total customers": 30874,
+        "weeks to enrol": 20.74
+      },
+      {
+        "relative lift (MDE)": "50%",
+        "control rate %": 1.28,
+        "treatment rate %": 1.92,
+        "customers per group": 6032,
+        "total customers": 12064,
+        "weeks to enrol": 8.11
+      }
+    ],
+    "n_per_group_20pct": 33245,
+    "sim_power": 0.7935,
+    "sim_alpha": 0.048
+  },
+  "recommendations": {
+    "orders_per_month_2018": 6597.125,
+    "late_per_month_2018": 509.75,
+    "low_review_gap": 0.5315232880711108,
+    "r1_avoided": 38.402690582959636,
+    "r2_avoided": 92.1136590229312,
+    "r2_slow_late": 0.1165899627438089,
+    "r2_23_late": 0.07621579705328459,
+    "r2_slow_share": 0.3458324648994827,
+    "r3_states": [
+      "MA",
+      "CE",
+      "PI",
+      "PA",
+      "MS",
+      "BA",
+      "ES",
+      "RJ"
+    ],
+    "r3_avoided": 94.79455302499194,
+    "r3_order_share": 0.21251681603728897,
+    "r3_late_share": 0.3984796468857283,
+    "r4_extra_repeaters": 16.513344632394183,
+    "r4_gmv": 2645.324465871838,
+    "handover_table": [
+      {
+        "handover": "<=1d",
+        "orders": 11611,
+        "late_rate": 0.0363
+      },
+      {
+        "handover": "1-2d",
+        "orders": 13885,
+        "late_rate": 0.0605
+      },
+      {
+        "handover": "2-3d",
+        "orders": 9027,
+        "late_rate": 0.0762
+      },
+      {
+        "handover": "3-5d",
+        "orders": 10076,
+        "late_rate": 0.0825
+      },
+      {
+        "handover": ">5d",
+        "orders": 8176,
+        "late_rate": 0.1586
+      }
+    ]
+  }
+}

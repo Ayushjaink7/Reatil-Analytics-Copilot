@@ -1,0 +1,16 @@
+# data and the database built from it (download from Kaggle, see README)
+data/*.csv
+olist.db
+
+# secrets
+.env
+
+# agent logs
+agent/logs/
+
+# python / jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
